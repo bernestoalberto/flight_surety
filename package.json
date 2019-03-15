@@ -1,11 +1,11 @@
 {
-  "name": "flightsurety",
+  "name": "flight-surety",
   "version": "1.0.0",
   "description": "",
   "directories": {
     "test": "test"
   },
-  "repository": "https://github.com/techbubble/flightsurety",
+  "repository": "https://github.com/bernestoalberto/flight_surety",
   "license": "MIT",
   "scripts": {
     "test": "truffle test ./test/flightSurety.js",
@@ -35,7 +35,7 @@
     "start-server-webpack-plugin": "2.2.5",
     "style-loader": "^0.23.1",
     "superstatic": "6.0.3",
-    "truffle": "5.0.2",
+    "truffle": "^5.0.2",
     "truffle-hdwallet-provider": "1.0.2",
     "web3": "1.0.0-beta.37",
     "webpack": "^4.6.0",
@@ -43,5 +43,7 @@
     "webpack-dev-server": "3.1.14",
     "webpack-node-externals": "1.7.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "compile": "0.0.2"
+  }
 }
