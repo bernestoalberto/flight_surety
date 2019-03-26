@@ -145,7 +145,7 @@ contract FlightSuretyApp {
     function fetchFlightStatus
                         (
                             address airline,
-                            string flight,
+                            string calldata flight,
                             uint256 timestamp                            
                         )
                         external
@@ -230,11 +230,11 @@ contract FlightSuretyApp {
                             )
                             view
                             external
-                            returns( uint8[3])
+                            returns(uint8[3])
     {
         require(oracles[msg.sender].isRegistered, "Not registered as an oracle");
-
-        return oracles[msg.sender].indexes;
+     
+        return  oracles[msg.sender].indexes;
     }
 
 
@@ -248,7 +248,7 @@ contract FlightSuretyApp {
                         (
                             uint8 index,
                             address airline,
-                            string flight,
+                            string calldata flight,
                             uint256 timestamp,
                             uint8 statusCode
                         )
