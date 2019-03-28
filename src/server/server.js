@@ -23,6 +23,11 @@ app.get('/api', (req, res) => {
       message: 'An API for use with your Dapp!'
     })
 })
+app.get('/flights', (req, res) => {
+  res.send({
+    message: 'Getting the flights with timestamps!'
+  })
+})
 
 export default app;
 
