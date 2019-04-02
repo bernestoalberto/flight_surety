@@ -17,6 +17,7 @@ contract FlightSuretyData {
         uint8 statusCode;
         uint256 updatedTimestamp;     
         address airline;
+        uint8 price;
     }
     mapping(bytes32 => Flight) private flights;
 
@@ -210,7 +211,7 @@ contract FlightSuretyData {
         return true;
     }
 
-    function processFlightStatus(address airline, string calldata flight, uint256 timestamp, uint8 statusCode) pure external
+    function processFlightStatus(address airline, string calldata flight, uint256 timestamp, uint8 statusCode)  external
     {
         //TODO
         //flights[flight].updatedTimestamp = 1;
@@ -265,6 +266,15 @@ contract FlightSuretyData {
         airlines[airlineAddress] = _newAirline;
     }
 
+
+    function getFlightPrice(bytes32 flightKey)
+    external
+    view
+    returns (uint8)
+    {
+        uint8  price = flights[flightKey].price;
+        return price;
+    }
 
 
   function registerInitialAirline() external  
