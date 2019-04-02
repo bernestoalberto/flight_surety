@@ -10,16 +10,27 @@ contract FlightSuretyData {
     /********************************************************************************************/
 
     address private contractOwner;                                      // Account used to deploy contract
-    bool private operational = true;                                    // Blocks all state changes throughout the contract if false
+    bool private operational = true;  
+       // List addresses allowed to call this contract
+    mapping(address => bool) public authorizedCallers;                                  // Blocks all state changes throughout the contract if false
 
         struct Flight {
         bool isRegistered;
         uint8 statusCode;
-        uint256 updatedTimestamp;     
+        uint256 updatedTimestamp; 
+            uint256 takeOff;
+        uint256 landing;    
         address airline;
+          string flightRef;
         uint8 price;
+         string from;
+        string to;
+         mapping(address => bool) bookings;
+        mapping(address => uint) insurances;
     }
     mapping(bytes32 => Flight) private flights;
+   bytes32[] public flightKeys;
+    uint public indexFlightKeys = 0;
 
     uint airlinesRegistered;
     uint flightsRegistered;
@@ -140,6 +151,11 @@ contract FlightSuretyData {
         require(msg.sender == contractOwner, "Caller is not contract owner");
         _;
     }
+       // restrict function calls to previously authorized addresses
+    modifier callerAuthorized() {
+        require(authorizedCallers[msg.sender] == true, "Address not authorized to call this function");
+        _;
+    }
     
     //Modifier that checks if a flight exists
     modifier flightExists(bytes32 flight)
@@ -154,7 +170,10 @@ contract FlightSuretyData {
         require(airlines[msg.sender].isFunded == true, "Flight does not exist");
         _;
     }
-
+   modifier flightRegistered(bytes32 flightKey) {
+        require(flights[flightKey].isRegistered, "This flight does not exist");
+        _;
+    }
     modifier hasVotes(address airlineAddress)
     {
         require(airlinesRegistered < 5 || newAirline[airlineAddress].votes >= airlinesRegistered.div(2), "Airline does not have enough votes");
@@ -211,10 +230,21 @@ contract FlightSuretyData {
         return true;
     }
 
-    function processFlightStatus(address airline, string calldata flight, uint256 timestamp, uint8 statusCode)  external
+    function processFlightStatus( bytes32 flightKey,uint8 statusCode)     external
+    flightRegistered(flightKey)
+    requireIsOperational
+    callerAuthorized
+    //notYetProcessed(flightKey)
     {
-        //TODO
-        //flights[flight].updatedTimestamp = 1;
+        // Check (modifiers)
+        Flight storage flight = flights[flightKey];
+        // Effect
+        flight.statusCode = statusCode;
+        // Interact
+        // 20 = "flight delay due to airline"
+        if (statusCode == 20) {
+            creditInsurees(flightKey);
+        }
     }
       //View insurance purchased for flight
     function viewInsurancePurchasedForFlight(bytes32 flight) public view returns(uint256)
@@ -331,27 +361,39 @@ function isAirline(address airline) view public returns(bool)
         }
     }
 
-    function registerFlight(bytes32 flight, uint timeStamp,uint8 statusCode,address airlineAddress) requireIsOperational external
+    function registerFlight  (
+        uint _takeOff,
+        uint _landing,
+        uint256 _timestamp,
+        string calldata _flight,
+        uint8 _price,
+        string calldata _from,
+        string calldata _to,
+        address originAddress
+    )
+    external
+    requireIsOperational
+    callerAuthorized
     {
-        //works in test, not in dapp
-        // Flight memory newFlight = Flight(true,statusCode,timeStamp,contractOwner);
-        // flights[flight] = newFlight;
-        // flightsRegistered = flightsRegistered.add(1);
+        require(_takeOff > now, "A flight cannot take off in the past");
+        require(_landing > _takeOff, "A flight cannot land before taking off");
 
-        //works in dapp
-        // TempStruct1 memory newThing = TempStruct1(airlineAddress,statusCode,true);
-        // tempMap1[flight] = newThing;
-
-        //does not work in dapp
-        // TempStruct2 memory newFlight = TempStruct2(true,statusCode,timeStamp,contractOwner);
-        // tempMap2[flight] = newFlight;
-        // flightsRegistered = flightsRegistered.add(1);
-
-        //works in dapp
-        TempStruct3 memory newFlight = TempStruct3(airlineAddress,true,true,true,false,false);
-        tempMap3[flight] = newFlight;
-        flightsRegistered = flightsRegistered.add(1);
-
+        Flight memory flight = Flight(
+            true,
+            0,
+                 _timestamp,
+            _takeOff,
+            _landing,
+            originAddress,
+            _flight,
+            _price,
+            _from,
+            _to
+        );
+        bytes32 flightKey = keccak256(abi.encodePacked(_flight, _to, _landing));
+        flights[flightKey] = flight;
+        indexFlightKeys = flightKeys.push(flightKey).sub(1);
+        // event emission in app contract
     }
     /**
      *  @dev Credits payouts to insurees
@@ -360,7 +402,7 @@ function isAirline(address airline) view public returns(bool)
                                 (
                                     bytes32 flight
                                 )
-                                external
+                                internal
                                 returns(uint256)
     {
         address creditAddress = msg.sender;
@@ -450,4 +492,3 @@ function isAirline(address airline) view public returns(bool)
         return true;
     }
 }
-
