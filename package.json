@@ -6,6 +6,7 @@
     "test": "test"
   },
   "repository": "https://github.com/bernestoalberto/flight_surety",
+  "author": "Ernesto Bonet <ebonet@eabonet.com> https://www.eabonet.com",
   "license": "MIT",
   "scripts": {
     "test": "truffle test ./test/flightSurety.js",
@@ -13,7 +14,6 @@
     "dapp:prod": "webpack --mode production  --config webpack.config.dapp.js",
     "server": "rm -rf ./build/server && webpack --config webpack.config.server.js"
   },
-  "author": "Nik Kalyani <nik@kalyani.com> https://www.kalyani.com",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
@@ -35,7 +35,7 @@
     "start-server-webpack-plugin": "2.2.5",
     "style-loader": "^0.23.1",
     "superstatic": "6.0.3",
-    "truffle": "^5.0.2",
+    "truffle": "5.0.2",
     "truffle-hdwallet-provider": "1.0.2",
     "web3": "1.0.0-beta.37",
     "webpack": "^4.6.0",
@@ -44,6 +44,8 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
-    "compile": "0.0.2"
+    "body-parser": "^1.18.3",
+    "keccak256": "^1.0.0",
+    "truffle-assertions": "^0.8.0"
   }
 }
