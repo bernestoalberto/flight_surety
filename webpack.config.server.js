@@ -8,6 +8,7 @@ module.exports = {
         'webpack/hot/poll?1000',
         './src/server/index'
     ],
+    mode:'development',
     watch: true,
     target: 'node',
     externals: [nodeExternals({
