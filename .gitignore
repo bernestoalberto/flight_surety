@@ -8,7 +8,6 @@ src/dapp/config.json
 src/server/config.json
 /dapp/
 prod/
-truffle-config.js
 # Runtime data
 pids
 *.pid
