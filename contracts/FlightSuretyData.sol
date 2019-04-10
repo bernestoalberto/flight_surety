@@ -346,6 +346,11 @@ contract FlightSuretyData {
         } 
     }
 
+   function getFlightInsurance(address passenger) returns(Passenger traveler){
+     
+     return   InsuredPassengers[passenger]; 
+
+   }
     function getPassengersInsured
         (
             string flight
