@@ -346,11 +346,11 @@ contract FlightSuretyData {
         } 
     }
 
-   function getFlightInsurance(address passenger) returns(Passenger traveler){
+   /*function getFlightInsurance(address passenger) returns(Passenger traveler){
      
      return   InsuredPassengers[passenger]; 
 
-   }
+   }*/
     function getPassengersInsured
         (
             string flight
@@ -427,7 +427,8 @@ contract FlightSuretyData {
         uint amount  = InsurancePayment[payee];
         InsurancePayment[payee] = 0;
         contractBalance = contractBalance.sub(amount);
-        payee.transfer(amount);
+            payee.transfer(amount);
+            //payee.send(amount);
     }
 
    /**

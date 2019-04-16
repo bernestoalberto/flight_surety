@@ -11,20 +11,18 @@ To install, download or clone the repo, then:
 `npm install`
 `truffle compile`
 `truffle migrate`
-Using network 'rinkeby'.
 
-Running migration: 1_initial_migration.js
   Deploying Migrations...
-  ... 0x5e3e0d9a5c61523de32c364d0ecabe64a14a0dee8276e894af0653e8cce63ef7
-  Migrations: 0x2608c14c219a1dfb69fcce05cdf5416e186fa777
+  ... 0x90f34751d3df8bf60259fc6f75e52bae6c9984833924bc9cc0a1207fecb6926c
+  Migrations: 0xb34c2f24e8d6375b1ef38dd99d973d969981415b
 Saving artifacts...
 Running migration: 2_deploy_contracts.js
-  Deploying FlightSuretyData...
-  ... 0x11477729271f4f7569c24e50ce19c9d2a12133b83464307f58e5cf2afd6b8ecb
-  FlightSuretyData: 0x7670599a0e9cc2c6a1c10a297b69237b9a1b87c1
-  Deploying FlightSuretyApp...
-  ... 0xd175e1ccc44a3343063732c98f1f5bd10a694b63eb8ae6fd8b3614185a316b88
-  FlightSuretyApp: 0x4f9865e411d37134f99767dd2781d6c5ea2e32a8
+  Replacing FlightSuretyData...
+  ... 0x381f812f3dd3a0f600f7a2af003801e7ba9bf1bc7b4b4ce3c4e5438554d3bd63
+  FlightSuretyData: 0xabf5af6b3f25386a8b6e94512c5c038e157652b2
+  Replacing FlightSuretyApp...
+  ... 0x0f6e053671cc651fc7ad279eac349418bcf3e4386347367acadc01103d2e1c16
+  FlightSuretyApp: 0x77e5bf0eccf0a450446e1db7ff7c824e697ef951
 Saving artifacts...
 
 

@@ -308,8 +308,13 @@ contract FlightSuretyApp {
             emit InsureesCredited(flight);
         }
     }
-     function claimFlightInsurance () public {
-        var (status, passenger, timeStamp, airlineName, price) = flightsuretydata.getFlightInsurance(msg.sender);
+   /*  function claimFlightInsurance () public {
+        address memory direccio =  flightsuretydata.getFlightInsurance(msg.sender);
+    uint8    status = flights[direccio].statusCode;
+         passenger = flights[direccio];
+          timeStamp = direccio []; 
+       string storage  airlineName = trav []; 
+        uint price = direccio []; 
         if(keccak256(status) == keccak256(ACTIVE)){
             uint8 flightStatus = STATUS_CODE_LATE_AIRLINE;
             if(flightStatus == STATUS_CODE_LATE_AIRLINE){
@@ -320,7 +325,7 @@ contract FlightSuretyApp {
                 flightSuretyData.setFlightInsuranceStatus(msg.sender, INACTIVE_EXPIRED);
             }
         }
-    }
+    }*/
 
     /**
     * @dev Called when passenger wants to withdraw insurance payout
@@ -575,7 +580,7 @@ contract FlightSuretyData {
     function _getRegisteredAirlinesNum() external returns(uint number);
     function fund (uint256 fundAmt, address sender) public;
     function creditInsurees (string  flight) external;
-    function flightsuretydata.getFlightInsurance(address owner_) public return (Passenger _passenger)
+  //  function getFlightInsurance(address owner_) public returns (Passenger _passenger);
     function isRegistered(address _airline) public returns(bool _reg);
     function isFunded(address _airline) public returns(bool _reg);
     function buy(string  flight, uint256 time, address passenger, address sender, uint256 amount) public;
